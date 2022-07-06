@@ -1,0 +1,199 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+<title>재능 기부</title>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/index.css">
+
+</head>
+<body>
+	<div class="w3-sidebar w3-light-grey w3-bar-block" style=width:25%;>
+		<h3 class="w3-bar-item">Probono Project menu</h3>
+		<a class="w3-bar-item w3-button" onclick="load1()">1. 진행중인 Probono Project 모두 검색</a> 
+		
+		<a class="w3-bar-item w3-button" onclick="load2()">2. 참여중인 기부자 모두 검색</a> 
+		
+		<a class="w3-bar-item w3-button" onclick="load3()">3. 재능 기부자 가입하기</a>
+		
+		<a class="w3-bar-item w3-button">4. 기부자 ID : <input id="search1"  type="text" name="activistId">
+		<button onclick="load7()">검색</button></a>
+		
+		<a class="w3-bar-item w3-button" onclick="load4()">5. 참여중인 수혜자 모두 검색</a>
+		<a class="w3-bar-item w3-button" onclick="load5()">6. 재능 수혜자 가입하기</a>
+		
+		<a class="w3-bar-item w3-button">7. 수혜자 ID : <input id="search2"  type="text" name="recipientId">
+		<button onclick="load8()">검색</button></a>	
+		
+		
+	</div>
+	
+
+
+	<p>
+	<hr>
+	
+	<div style="margin-left:25%">
+		<div class="w3-container w3-teal" id="fun1">
+ 			 <h1 >Probono Project menu</h1>
+		</div>
+	
+		<div class="w3-container" id="demo"></div>
+	
+	</div>
+
+	<script type="text/javascript">
+		
+		let res_data;
+		
+		//sql : select * from probono_Project
+		function load1() {
+			const xhttp = new XMLHttpRequest();
+	
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				document.getElementById("demo").innerHTML = res_data;
+			}
+			
+			xhttp.open("post", "probono?command=probonoProjectAll", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		
+		//sql : select * from activist;
+		function load2() {
+			const xhttp = new XMLHttpRequest();
+			
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				document.getElementById("demo").innerHTML = res_data;
+			}
+			
+			xhttp.open("post", "probono?command=activistAll", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		//sql : select * from probono;
+		function load3() {
+			const xhttp = new XMLHttpRequest();
+	
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				document.getElementById("demo").innerHTML = res_data;
+			}
+			
+			xhttp.open("post", "activist/activistInsert.html", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		function load4() {
+			const xhttp = new XMLHttpRequest();
+	
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				document.getElementById("demo").innerHTML = res_data;
+			}
+			
+			xhttp.open("post", "probono?command=recipientAll", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		function load5() {
+			const xhttp = new XMLHttpRequest();
+	
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				document.getElementById("demo").innerHTML = res_data;
+			}
+			
+			xhttp.open("post", "recipient/recipientInsert.html", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		function load6() {
+			const xhttp = new XMLHttpRequest();
+			
+			let id=document.getElementById("id").value;
+			let name=document.getElementById("name").value;
+			let pw=document.getElementById("password").value;
+			let major=document.getElementById("major").value;
+
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				
+				document.getElementById("demo").innerHTML = res_data;
+				
+			}
+			xhttp.open("post", `probono?command=activistInsert&id=${id}&name=${name}&pw=${pw}&major=${major}`, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		function load7() {
+			const xhttp = new XMLHttpRequest();
+			
+			let search1= document.getElementById("search1").value;
+
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				
+				document.getElementById("demo").innerHTML = res_data;
+				
+			}
+			xhttp.open("post", `probono?command=activist&activistId=${search1}`, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+
+		function load8() {
+			const xhttp = new XMLHttpRequest();
+			
+			let search2= document.getElementById("search2").value;
+
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				
+				document.getElementById("demo").innerHTML = res_data;
+				
+			}
+			xhttp.open("post", `probono?command=recipient&recipientId=${search2}`, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+		
+		function load9() {
+			const xhttp = new XMLHttpRequest();
+			
+			let id=document.getElementById("id").value;
+			let name=document.getElementById("name").value;
+			let pw=document.getElementById("password").value;
+			let receiveHopeContent=document.getElementById("receiveHopeContent").value;
+
+			xhttp.onload = function() {
+				res_data = this.responseText;
+				
+				document.getElementById("demo").innerHTML = res_data;
+				
+			}
+			xhttp.open("post", `probono?command=recipientInsert&id=${id}&name=${name}&pw=${pw}&receiveHopeContent=${receiveHopeContent}`, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send();
+		}
+	</script>
+		
+	
+	
+
+
+
+
+</body>
+</html>
